@@ -45,6 +45,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 WORKDIR /app
 RUN chown -R homeassistant:homeassistant .
 
+USER homeassistant
 EXPOSE 8123
 ENTRYPOINT ["bin/hass"]
 
