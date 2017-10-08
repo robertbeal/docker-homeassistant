@@ -25,6 +25,8 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	&& rm -rf /tmp/*
 
 # homeassistant
+ENV VERSION=0.54.0
+
 RUN apk add --update --no-cache --virtual=build-dependencies \
 	alpine-sdk \
 	libffi-dev \
@@ -42,7 +44,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	&& python3 -m venv . \
 	&& source bin/activate \
 	&& python3 -m pip install \
-	homeassistant \
+	homeassistant==$VERSION \
 	pycrypto \
 
 	&& apk del --purge build-dependencies \
