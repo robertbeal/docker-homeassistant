@@ -2,9 +2,9 @@ FROM arm32v6/alpine:3.6
 
 WORKDIR /tmp
 
-RUN adduser -s /bin/false -D -h /app homeassistant
-
 # bluez
+ENV BLUEZ_VERSION=5.43
+
 RUN apk add --update --no-cache --virtual=build-dependencies \
 	alpine-sdk \	
 	dbus-dev \
@@ -15,9 +15,9 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	readline-dev \
         wget \
 
-	&& wget --no-check-certificate https://www.kernel.org/pub/linux/bluetooth/bluez-5.43.tar.gz \
-	&& tar -xzf bluez-5.43.tar.gz \
-	&& cd bluez-5.43 \
+	&& wget --no-check-certificate https://www.kernel.org/pub/linux/bluetooth/bluez-${BLUEZ_VERSION}.tar.gz \
+	&& tar -xzf bluez-${BLUEZ_VERSION}.tar.gz \
+	&& cd bluez-${BLUEZ_VERSION} \
 	&& ./configure --disable-systemd \
 	&& make \
 	&& cp attrib/gatttool /usr/local/bin \
@@ -25,7 +25,9 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	&& rm -rf /tmp/*
 
 # homeassistant
-ENV VERSION=0.54.0
+ENV HASS_VERSION=0.55.2
+
+RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant
 
 RUN apk add --update --no-cache --virtual=build-dependencies \
 	alpine-sdk \
@@ -34,7 +36,8 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	python3-dev \
 
 	&& apk add --no-cache \
-	glib \
+	curl \
+        glib \
 	openssh \
 	python3 \
 	su-exec \
@@ -44,14 +47,21 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 	&& python3 -m venv . \
 	&& source bin/activate \
 	&& python3 -m pip install \
-	homeassistant==$VERSION \
+	homeassistant==$HASS_VERSION \
 	pycrypto \
+
+        # run hass so it installs its dependencies
+        && /app/bin/hass --config /config
 
 	&& apk del --purge build-dependencies \
 	&& rm -rf /tmp/*
 
+RUN "/app/bin/hass"
+
+WORKDIR /config
+VOLUME /config
 EXPOSE 8123
 
 COPY entrypoint.sh /usr/local/bin
 ENTRYPOINT ["/sbin/tini", "--", "entrypoint.sh"]
-CMD ["/app/bin/hass"]
+CMD ["/app/bin/hass", "--config", "/config"]
