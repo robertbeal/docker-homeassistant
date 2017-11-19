@@ -52,6 +52,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
   homeassistant==$HASS_VERSION \
   mysqlclient \
   pycrypto \
+  PyXiaomiGateway \
 
   && apk del --purge build-dependencies \
   && rm -rf /tmp/*
