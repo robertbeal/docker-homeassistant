@@ -25,7 +25,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
   && rm -rf /tmp/*
 
 # homeassistant
-ENV HASS_VERSION=0.55.1
+ENV HASS_VERSION=0.58.0
 
 RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant
 
@@ -55,8 +55,6 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 
   && apk del --purge build-dependencies \
   && rm -rf /tmp/*
-
-RUN "/app/bin/hass"
 
 WORKDIR /config
 VOLUME /config
