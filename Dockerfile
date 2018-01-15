@@ -27,7 +27,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 # homeassistant
 ENV HASS_VERSION=0.60
 
-RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant
+RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
   && apk add --no-cache --virtual=build-dependencies \
     alpine-sdk \
     libffi-dev \
