@@ -14,5 +14,5 @@ docker create \
         --health-cmd="curl --fail http://localhost:8123/api || exit 1" \
         --health-interval=5s \
         --health-retries=3 \
-	-t robertbeal/homeassistant
+	robertbeal/homeassistant
 ```
