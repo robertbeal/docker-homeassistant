@@ -7,4 +7,4 @@ if [ "$(id -u)" = '0' ]; then
     exec su-exec homeassistant /app/bin/hass "$@"
 fi
 
-exec "$@"
+exec /app/bin/hass "$@"
