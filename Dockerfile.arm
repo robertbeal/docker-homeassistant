@@ -41,7 +41,6 @@ RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
     openssh \
     python3 \
     su-exec \
-    tini \
   && cd /app \
   && python3 -m venv . \
   && source bin/activate \
@@ -58,5 +57,5 @@ VOLUME /config
 EXPOSE 8123
 
 COPY entrypoint.sh /usr/local/bin
-ENTRYPOINT ["/sbin/tini", "--", "entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["--config", "/config"]

@@ -5,8 +5,10 @@
 [![](https://img.shields.io/docker/stars/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
 [![](https://img.shields.io/docker/automated/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
 ```
-docker create \
+docker run \
   --name homeassistant \
+  --init \
+  --rm \
   --user $(id homeassistant -u):$(id homeassistant -g) \
   --net host \
   --volume /var/homeassistant:/config \
