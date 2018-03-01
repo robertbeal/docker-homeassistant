@@ -44,6 +44,7 @@ RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
   && apk add --no-cache \
     curl \
     glib \
+    openssh-client \
     python3 \
     su-exec \
   && python3 -m pip install --no-cache-dir \
