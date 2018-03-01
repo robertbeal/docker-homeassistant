@@ -30,25 +30,26 @@ ENV HASS_VERSION=0.63.3
 RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
   && apk add --no-cache --virtual=build-dependencies \
     alpine-sdk \
+    eudev-dev \
+    glib-dev \
+    jpeg-dev \
     libffi-dev \
-    mariadb-dev \
     libressl-dev \
+    libxml2-dev \
+    libxslt-dev \
+    linux-headers \
+    mariadb-dev \
     python3-dev \
+    zlib-dev \
   && apk add --no-cache \
     curl \
     glib \
-    mariadb-client-libs \
-    openssh \
     python3 \
     su-exec \
-  && cd /app \
-  && python3 -m venv . \
-  && source bin/activate \
-  && python3 -m pip install \
+  && python3 -m pip install --no-cache-dir \
     homeassistant==$HASS_VERSION \
-    mysqlclient \
-    pycrypto \
-    PyXiaomiGateway \
+  && curl -L https://github.com/home-assistant/home-assistant/archive/$HASS_VERSION.tar.gz | tar zx \
+  && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "python3 -m pip install -r /tmp/home-assistant-$HASS_VERSION/requirements_all.txt" \
   && apk del --purge build-dependencies \
   && rm -rf /tmp/*
 
@@ -56,6 +57,8 @@ WORKDIR /config
 VOLUME /config
 EXPOSE 8123
 
+HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:8123/api/ || exit 1
+
 COPY entrypoint.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["--config", "/config"]
+CMD ["--skip-pip", "--config", "/config"]

@@ -4,7 +4,7 @@ set -e
 if [ "$(id -u)" = '0' ]; then
     chown -R homeassistant /app
     chown -R homeassistant /config
-    exec su-exec homeassistant /app/bin/hass "$@"
+    exec su-exec python3 -m homeassistant "$@"
 fi
 
-exec /app/bin/hass "$@"
+exec python3 -m homeassistant "$@"
