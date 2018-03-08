@@ -4,16 +4,19 @@
 [![](https://img.shields.io/docker/pulls/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
 [![](https://img.shields.io/docker/stars/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
 [![](https://img.shields.io/docker/automated/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
+
+An alpine-sized build of HomeAssistant with all standard plugins installed. The container can be run in `--read-only` mode for additional security!
+
 ```
 docker run \
   --name homeassistant \
   --init \
-  --rm \
+  --read-only \
   --user $(id homeassistant -u):$(id homeassistant -g) \
   --net host \
   --volume /var/homeassistant:/config \
-  -p 8123:8123 -p 8300:8300 \
-  --health-cmd="curl --fail http://localhost:8123/api || exit 1" \
+  -p 127.0.0.1:8123:8123 \
+  --health-cmd="curl --fail http://127.0.0.1:8123/api || exit 1" \
   --health-interval=5s \
   --health-retries=3 \
   robertbeal/homeassistant
