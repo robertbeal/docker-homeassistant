@@ -13,7 +13,6 @@ docker run \
   --init \
   --read-only \
   --user $(id homeassistant -u):$(id homeassistant -g) \
-  --net host \
   --volume /var/homeassistant:/config \
   -p 127.0.0.1:8123:8123 \
   --health-cmd="curl --fail http://127.0.0.1:8123/api || exit 1" \
