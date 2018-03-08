@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/robertbeal/docker-homeassistant.svg?branch=master)](https://travis-ci.org/robertbeal/homeassistant)
+[![Build Status](https://travis-ci.org/robertbeal/docker-homeassistant.svg?branch=master)](https://travis-ci.org/robertbeal/docker-homeassistant)
 [![](https://images.microbadger.com/badges/image/robertbeal/homeassistant.svg)](https://microbadger.com/images/robertbeal/homeassistant "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/robertbeal/homeassistant.svg)](https://microbadger.com/images/robertbeal/homeassistant "Get your own version badge on microbadger.com")
 [![](https://img.shields.io/docker/pulls/robertbeal/homeassistant.svg)](https://hub.docker.com/r/robertbeal/homeassistant/)
