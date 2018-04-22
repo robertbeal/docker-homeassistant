@@ -30,6 +30,7 @@ ENV HASS_VERSION=0.67.1
 RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
   && apk add --no-cache --virtual=build-dependencies \
     alpine-sdk \
+    autoconf \
     eudev-dev \
     glib-dev \
     jpeg-dev \
