@@ -4,7 +4,7 @@ MAINTAINER Robert Beal <rob@kohi.uk>
 WORKDIR /tmp
 
 # bluez
-ENV BLUEZ_VERSION=5.43
+ENV BLUEZ_VERSION=5.49
 
 RUN apk add --update --no-cache --virtual=build-dependencies \
     alpine-sdk \
