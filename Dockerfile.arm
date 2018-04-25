@@ -48,6 +48,7 @@ RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
     openssh-client \
     python3 \
     su-exec \
+  && python3 -m pip install --upgrade pip \
   && python3 -m pip install --no-cache-dir \
     homeassistant==$HASS_VERSION \
   && curl -L https://github.com/home-assistant/home-assistant/archive/$HASS_VERSION.tar.gz | tar zx \
