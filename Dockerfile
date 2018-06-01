@@ -35,7 +35,7 @@ RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
     glib-dev \
     jpeg-dev \
     libffi-dev \
-    libressl-dev \
+    libressl-dev=2.6.4-r2 \
     libxml2-dev \
     libxslt-dev \
     linux-headers \
