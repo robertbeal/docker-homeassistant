@@ -25,7 +25,7 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
   && rm -rf /tmp/*
 
 # homeassistant
-ENV HASS_VERSION=0.70.0
+ENV HASS_VERSION=0.71.0
 
 RUN adduser -s /bin/false -D -h /app -u 4900 homeassistant \
   && apk add --no-cache --virtual=build-dependencies \
