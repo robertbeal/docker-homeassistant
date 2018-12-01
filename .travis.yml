@@ -1,0 +1,26 @@
+services: docker
+language: bash
+env:
+  global:
+    - VERSION=0.73.1
+  matrix:
+    - ARCH=i386
+    - ARCH=amd64
+
+before_script:
+  - ./build.sh $ARCH
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+script:  
+  - docker build -t robertbeal/homeassistant:$ARCH -t robertbeal/homeassistant:$ARCH.$VERSION --build-arg=VERSION=$VERSION --file Dockerfile.$ARCH .
+  - docker run -d --name=homeassistant-$ARCH --health-cmd="curl --fail http://127.0.0.1:8123/api || exit 1" --health-interval=5s --health-retries=3 robertbeal/homeassistant:$ARCH
+  - if [[ -z 'docker ps --filter="name=homeassistant-$ARCH" --filter="health=healthy" -q' ]]; then exit 1; fi
+
+deploy:
+  provider: script
+  script:
+    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+    && docker push robertbeal/homeassistant:$ARCH
+    && docker push robertbeal/homeassistant:$ARCH.$VERSION
+  on:
+    branch: master
